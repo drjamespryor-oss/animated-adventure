@@ -1,0 +1,36 @@
+import { ComptrollerWebsiteDataSchema } from './schemas';
+import { generateMockWebsiteData } from './mockGenerator';
+
+describe('Orange County Comptroller Data Validation', () => {
+  
+  it('should successfully validate valid generated mock data', () => {
+    const fakeData = generateMockWebsiteData();
+    
+    const result = ComptrollerWebsiteDataSchema.safeParse(fakeData);
+    
+    expect(result.success).toBe(true);
+  });
+
+  it('should fail validation if a phone number format is invalid', () => {
+    const badData = generateMockWebsiteData();
+    // Intentionally break the phone format rule (XXX-XXX-XXXX)
+    badData.footer.departments[0].phone = "4078365115"; 
+
+    const result = ComptrollerWebsiteDataSchema.safeParse(badData);
+    
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.error.errors[0].message).toContain("Invalid phone format");
+    }
+  });
+
+  it('should fail validation if the state code is not 2 characters', () => {
+    const badData = generateMockWebsiteData();
+    // Intentionally break the 2-character constraint
+    badData.footer.mailingAddress.state = "FLORIDA"; 
+
+    const result = ComptrollerWebsiteDataSchema.safeParse(badData);
+    
+    expect(result.success).toBe(false);
+  });
+});
