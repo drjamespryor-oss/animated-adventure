@@ -1,0 +1,60 @@
+// Main container interface for the entire website data structure
+export interface ComptrollerWebsiteData {
+  meta: WebsiteMeta;
+  navigation: NavigationMenu;
+  services: ServiceItem[];
+  footer: FooterData;
+}
+
+// Meta information about accessibility and site configuration
+export interface WebsiteMeta {
+  isAudioEyeEnabled: boolean;
+  accessibilityToolbarShortcut: string; // e.g., "shift + ="
+  languageOptions: string[];
+  copyrightNotice: string;
+}
+
+// Global and site navigation structures
+export interface NavigationMenu {
+  skipToMainContentUrl: string;
+  topLinks: string[]; // e.g., ["About Us", "Departments", "Services", "How Do I"]
+  socialMedia: SocialMediaLinks;
+  helpfulLinks: string[];
+}
+
+export interface SocialMediaLinks {
+  facebook?: string;
+  x?: string; // Formerly Twitter
+  youtube?: string;
+}
+
+// Structured definition for individual services provided by the Comptroller
+export interface ServiceItem {
+  id: string; // URL slug or camelCase identifier
+  title: string; // e.g., "Tax Deed Sales"
+  description: string; // The descriptive paragraph
+  externalProvider?: string; // e.g., "Orange County Sheriff's Office" for False Alarms
+  actionLinks?: string[]; // Deep links like "Online Payment", "File Taxes"
+}
+
+// Footer, contact details, and location data
+export interface FooterData {
+  organizationName: string;
+  mailingAddress: MailingAddress;
+  departments: DepartmentContact[];
+  siteLinks: string[]; // e.g., ["Home", "Site Map", "Privacy Policy"]
+  platformProvider: string; // e.g., "CivicPlus"
+}
+
+export interface MailingAddress {
+  poBox: string;
+  city: string;
+  state: string;
+  zipCode: string;
+}
+
+export interface DepartmentContact {
+  name: string; // e.g., "Official Records/Recording"
+  phone: string; // e.g., "407-836-5115"
+  email?: string;
+}
