@@ -1,0 +1,66 @@
+import { z } from 'zod';
+
+// 1. Meta Schema
+export const WebsiteMetaSchema = z.object({
+  isAudioEyeEnabled: z.boolean(),
+  accessibilityToolbarShortcut: z.string(),
+  languageOptions: z.array(z.string()),
+  copyrightNotice: z.string(),
+});
+
+// 2. Navigation Schema
+export const SocialMediaLinksSchema = z.object({
+  facebook: z.string().url().optional(),
+  x: z.string().url().optional(),
+  youtube: z.string().url().optional(),
+});
+
+export const NavigationMenuSchema = z.object({
+  skipToMainContentUrl: z.string(),
+  topLinks: z.array(z.string()),
+  socialMedia: SocialMediaLinksSchema,
+  helpfulLinks: z.array(z.string()),
+});
+
+// 3. Services Schema
+export const ServiceItemSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  description: z.string(),
+  externalProvider: z.string().optional(),
+  actionLinks: z.array(z.string()).optional(),
+});
+
+// 4. Footer & Contact Schema
+export const MailingAddressSchema = z.object({
+  poBox: z.string(),
+  city: z.string(),
+  state: z.string().length(2), // Enforces 2-letter state codes like "FL"
+  zipCode: z.string().regex(/^\d{5}(-\d{4})?$/), // Enforces 5-digit or ZIP+4 formats
+});
+
+export const DepartmentContactSchema = z.object({
+  name: z.string(),
+  phone: z.string().regex(/^\d{3}-\d{3}-\d{4}$/, "Invalid phone format (expected XXX-XXX-XXXX)"),
+  email: z.string().email().optional(),
+});
+
+export const FooterDataSchema = z.object({
+  organizationName: z.string(),
+  mailingAddress: MailingAddressSchema,
+  departments: z.array(DepartmentContactSchema),
+  siteLinks: z.array(z.string()),
+  platformProvider: z.string(),
+});
+
+// 5. Root Entry Schema
+export const ComptrollerWebsiteDataSchema = z.object({
+  meta: WebsiteMetaSchema,
+  navigation: NavigationMenuSchema,
+  services: z.array(ServiceItemSchema),
+  footer: FooterDataSchema,
+});
+
+// Automatically infer TypeScript types directly from Zod (replaces manual interfaces)
+export type ComptrollerWebsiteData = z.infer<typeof ComptrollerWebsiteDataSchema>;
+export type ServiceItem = z.infer<typeof ServiceItemSchema>;
