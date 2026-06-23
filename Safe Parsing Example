@@ -1,0 +1,37 @@
+// Example raw data incoming from a web scraper or API
+const rawData = {
+  meta: {
+    isAudioEyeEnabled: true,
+    accessibilityToolbarShortcut: "shift + =",
+    languageOptions: ["Google Translate"],
+    copyrightNotice: "CivicPlus"
+  },
+  navigation: {
+    skipToMainContentUrl: "#main",
+    topLinks: ["Menu"],
+    socialMedia: {},
+    helpfulLinks: []
+  },
+  services: [],
+  footer: {
+    organizationName: "Orange County Comptroller",
+    mailingAddress: { poBox: "P.O. Box 38", city: "Orlando", state: "FL", zipCode: "32802" },
+    departments: [
+      { name: "Official Records", phone: "407-836-5115" }
+    ],
+    siteLinks: [],
+    platformProvider: "CivicPlus"
+  }
+};
+
+// Validate the data
+const result = ComptrollerWebsiteDataSchema.safeParse(rawData);
+
+if (result.success) {
+  // Data is fully type-safe and validated
+  const validatedData = result.data; 
+  console.log("Validation passed!", validatedData.footer.organizationName);
+} else {
+  // Handle validation formatting errors gracefully
+  console.error("Validation failed:", result.error.format());
+}
