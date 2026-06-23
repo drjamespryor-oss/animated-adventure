@@ -1,0 +1,54 @@
+import { faker } from '@faker-js/faker';
+import type { ComptrollerWebsiteData, ServiceItem } from './schemas'; // Path to your Zod file
+
+// Generate a single mock service
+export function generateMockService(overrides?: Partial<ServiceItem>): ServiceItem {
+  return {
+    id: faker.helpers.slugify(faker.company.buzzNoun()),
+    title: faker.company.buzzPhrase(),
+    description: faker.lorem.paragraph(),
+    externalProvider: faker.helpers.maybe(() => faker.company.name()),
+    actionLinks: faker.helpers.maybe(() => [faker.internet.url(), faker.internet.url()]),
+    ...overrides
+  };
+}
+
+// Generate the complete website payload
+export function generateMockWebsiteData(overrides?: Partial<ComptrollerWebsiteData>): ComptrollerWebsiteData {
+  return {
+    meta: {
+      isAudioEyeEnabled: faker.datatype.boolean(),
+      accessibilityToolbarShortcut: "shift + =",
+      languageOptions: ["Google Translate", "Spanish", "Creole"],
+      copyrightNotice: `Government Websites by ${faker.company.name()}`,
+    },
+    navigation: {
+      skipToMainContentUrl: "#main-content",
+      topLinks: ["About Us", "Departments", "Services", "How Do I"],
+      socialMedia: {
+        facebook: faker.internet.url(),
+        x: faker.internet.url(),
+        youtube: faker.internet.url()
+      },
+      helpfulLinks: Array.from({ length: 3 }, () => faker.company.catchPhrase())
+    },
+    services: Array.from({ length: 5 }, () => generateMockService()),
+    footer: {
+      organizationName: "Orange County Comptroller",
+      mailingAddress: {
+        poBox: `P.O. Box ${faker.number.int({ min: 1, max: 99 })}`,
+        city: "Orlando",
+        state: "FL",
+        zipCode: faker.location.zipCode({ format: '#####-####' })
+      },
+      departments: Array.from({ length: 2 }, () => ({
+        name: faker.commerce.department(),
+        phone: faker.helpers.replaceSymbolWithNumber('###-###-####'),
+        email: faker.helpers.maybe(() => faker.internet.email())
+      })),
+      siteLinks: ["Home", "Site Map", "Contact Us", "Accessibility"],
+      platformProvider: "CivicPlus"
+    },
+    ...overrides
+  };
+}
