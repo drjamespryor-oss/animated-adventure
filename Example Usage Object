@@ -1,0 +1,46 @@
+const orangeCountyData: ComptrollerWebsiteData = {
+  meta: {
+    isAudioEyeEnabled: true,
+    accessibilityToolbarShortcut: "shift + =",
+    languageOptions: ["Google Translate"],
+    copyrightNotice: "Government Websites by CivicPlus"
+  },
+  navigation: {
+    skipToMainContentUrl: "#main-content",
+    topLinks: ["About Us", "Departments", "Services", "How Do I"],
+    socialMedia: {
+      facebook: "https://facebook.com...",
+      x: "https://x.com...",
+      youtube: "https://youtube.com..."
+    },
+    helpfulLinks: ["Official Records Search", "2026 County Commission Maps", "Audits and Investigations"]
+  },
+  services: [
+    {
+      id: "falseAlarms",
+      title: "False Alarms",
+      description: "The Orange County Sheriff’s Office is committed to excellence in law enforcement...",
+      externalProvider: "Orange County Sheriff's Office"
+    },
+    {
+      id: "taxDeedSales",
+      title: "Tax Deed Sales",
+      description: "Each year, real estate taxes are to be paid by a predetermined date to avoid becoming delinquent..."
+    }
+  ],
+  footer: {
+    organizationName: "Orange County Comptroller",
+    mailingAddress: {
+      poBox: "P.O. Box 38",
+      city: "Orlando",
+      state: "FL",
+      zipCode: "32802"
+    },
+    departments: [
+      { name: "Official Records/Recording", phone: "407-836-5115" },
+      { name: "Administration & General Inquiry", phone: "407-836-5690", email: "example@occompt.com" }
+    ],
+    siteLinks: ["Home", "Site Map", "Contact Us", "Accessibility", "Privacy Policy"],
+    platformProvider: "CivicPlus"
+  }
+};
